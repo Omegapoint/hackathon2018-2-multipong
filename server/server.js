@@ -66,4 +66,8 @@ io.on('connection', function (socket) {
     setInterval(() => {
         io.emit('pong', state);
     }, 1000);
+
+    socket.on('pongkey', function(msg){
+        console.log(JSON.stringify(msg));
+    });
 });
