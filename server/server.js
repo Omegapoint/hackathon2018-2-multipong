@@ -23,7 +23,7 @@ calculateBounds(Object.keys(state.players).length);
 
 function createPlayer(name) {
     let id = Math.round(Math.random() * 10000);
-    state.players[id] = {name: name, padAngle: Math.random()*2*3.1415};
+    state.players[id] = {name: name, padAngle: Math.random()*2*3.1415, direction: 0};
     return id;
 }
 
@@ -77,6 +77,8 @@ io.on('connection', function (socket) {
     }, 20);
 
     socket.on('pongkey', function(msg){
-        console.log(JSON.stringify(msg));
+        if (state.players[msg.token]) {
+            state.players[msg.token].direction = msg.direction;
+        }
     });
 });
