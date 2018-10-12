@@ -23,19 +23,18 @@ app.delete('/unregister', function (req, res) {
 
 const timeoutScheduled = Date.now();
 
-setInterval(() => {
-    const delay = Date.now() - timeoutScheduled;
-
-    console.log(`${delay}ms have passed since I was scheduled`);
-}, 100);
+// setInterval(() => {
+//     // const delay = Date.now() - timeoutScheduled;
+//     //
+//     // console.log(`${delay}ms have passed since I was scheduled`);
+// }, 100);
 
 http.listen(3000, function () {
     console.log('listening on *:3000');
 });
 
-// https://socket.io/get-started/chat/
 io.on('connection', function (socket) {
-    socket.on('chat message', function (msg) {
-        io.emit('chat message', msg);
-    });
+    setInterval(() => {
+       io.emit('chat message', JSON.stringify(state));
+    }, 3000);
 });
