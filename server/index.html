@@ -36,7 +36,7 @@
         }
         document.onkeypress = function(evt) {
             evt = evt || window.event;
-            if (isArrowKey(evt) && !keyIsPressed) {
+            if (token && isArrowKey(evt) && !keyIsPressed) {
                 keyIsPressed = true;
                 const directionSignum = (evt.key === 'ArrowLeft' ? -1 : 1);
                 socket.emit('pongkey', {token: token, direction: directionSignum});
@@ -46,7 +46,7 @@
         document.onkeyup = function(evt) {
 
             evt = evt || window.event;
-            if (isArrowKey(evt)) {
+            if (token && isArrowKey(evt)) {
                 keyIsPressed = false;
                 socket.emit('pongkey', {token: token, direction: 0});
             }
@@ -90,6 +90,8 @@
 
     $('form').submit(function(){
         const name = $('#nameInput').val();
+        $('#nameInput').attr("disabled", true);
+        $('#joinButton').attr("disabled", "disabled");
         $.ajax({
             url: '/register',
             dataType: 'json',
