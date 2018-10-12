@@ -90,6 +90,8 @@
 
     $('form').submit(function(){
         const name = $('#nameInput').val();
+        $('#nameInput').attr("disabled", true);
+        $('#joinButton').attr("disabled", "disabled");
         $.ajax({
             url: '/register',
             dataType: 'json',
