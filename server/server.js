@@ -20,7 +20,8 @@ app.post('/register', function (req, res) {
 
 app.post('/start', function (req, res) {
     console.log("starts game...");
-    state.balls[0] = {x: 400, y: 400, v: 1000, radius: 40};
+    state.balls[0] = {x: 400, y: 400, v: 100, radius: 20, angle: 0};
+    res.status(200).send();
 });
 
 app.post('/stop', function (req, res) {
@@ -34,7 +35,10 @@ app.delete('/unregister', function (req, res) {
 
 setInterval(() => {
     state.bounds = bound(Object.keys(state.players).length, 800, 800);
-}, 20);
+    state.balls.forEach(element => {
+        element = ball(element, 0.01);
+    })
+}, 10);
 
 http.listen(3000, function () {
     console.log('listening on *:3000');
@@ -43,5 +47,5 @@ http.listen(3000, function () {
 io.on('connection', function (socket) {
     setInterval(() => {
         io.emit('pong', state);
-    }, 3000);
+    }, 20);
 });

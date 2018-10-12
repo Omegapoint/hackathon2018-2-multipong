@@ -1,4 +1,4 @@
-module.exports = (ball) => {
+module.exports = (ball, dt) => {
     function isOutOfBounds(aBall) {
         return false
     }
@@ -11,18 +11,8 @@ module.exports = (ball) => {
         return false
     }
 
-    for (let i = 0;i < this.maxID;i++) {
-        if(this.objects[i] === undefined) {
-            continue;
-        }
+    ball.y += Math.cos(ball.angle) * ball.v * dt;
+    ball.x += Math.sin(ball.angle) * ball.v * dt;
 
-        let obj = this.objects[i];
-
-        obj.y += Math.cos(obj.angle) * obj.v * dt;
-        obj.x += Math.sin(obj.angle) * obj.v * dt;
-
-        if (isOutOfBounds(ball)) {
-            delete this.objects[i];
-        }
-    }
-}
+    return ball;
+};
