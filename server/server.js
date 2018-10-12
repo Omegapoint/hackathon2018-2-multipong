@@ -3,9 +3,10 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const bound = require('./graphicLogic/courtBoundaries');
-const ball = require('./graphicLogic/ballObject');
+const ballUpdate = require('./graphicLogic/ballObject');
+const boundaryCalculator = require('./rules/boundsChecker');
 
-const state = {players: {}, bounds: [], balls: []};
+const state = {players: {}, bounds: [], balls: [], gameOver: false};
 
 app.use(bodyParser.json());
 
@@ -52,10 +53,18 @@ app.delete('/unregister', function (req, res) {
     res.status(200).send(state);
 });
 
+
 setInterval(() => {
-    state.balls.forEach(element => {
-        element = ball(element, 0.01);
-    })
+    if (!state.gameOver) {
+        state.balls.forEach(element => {
+            element = ballUpdate(element, 0.01);
+            state.gameOver = boundaryCalculator(element, Object.keys(state.players).length, 800, 800);
+
+            if (state.gameOver) {
+                console.log("GAME OVER");
+            }
+        });
+    }
 }, 10);
 
 http.listen(3000, function () {
@@ -65,7 +74,7 @@ http.listen(3000, function () {
 io.on('connection', function (socket) {
     setInterval(() => {
         io.emit('pong', state);
-    }, 1000);
+    }, 20);
 
     socket.on('pongkey', function(msg){
         console.log(JSON.stringify(msg));

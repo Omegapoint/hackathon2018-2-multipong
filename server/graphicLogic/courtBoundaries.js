@@ -1,5 +1,5 @@
 module.exports = (nPlayers, canvasHeight, canvasWidth) => {
-    const minDimension = Math.max(canvasHeight,canvasWidth)
+    const minDimension = Math.min(canvasHeight,canvasWidth)
     const radius = minDimension / 2.5
     const midpoint = [canvasWidth/2, canvasHeight/2]
     let nBoundaries = 0
@@ -24,10 +24,7 @@ module.exports = (nPlayers, canvasHeight, canvasWidth) => {
         pointLocation[1]+(boundaryLength/2)*Math.cos(pointLocationAngle)]
 
 
-        let playerBool = false
-        if (boundaryIndex % 2) {
-            playerBool = true
-        }
+        let playerBool = boundaryIndex % 2;
 
         return {
             start: startCoord,
