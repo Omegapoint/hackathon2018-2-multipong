@@ -40,6 +40,6 @@ http.listen(3000, function () {
 
 io.on('connection', function (socket) {
     setInterval(() => {
-       io.emit('chat message', JSON.stringify(state));
+       io.emit('pong', state);
     }, 3000);
 });
