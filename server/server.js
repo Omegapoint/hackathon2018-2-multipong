@@ -13,12 +13,20 @@ app.get('/', function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-    state.players[req.body.name] = Math.round(Math.random() * 10000);
+    state.players[Math.round(Math.random() * 10000)] = req.body.name;
     res.status(200).send(state);
 });
 
+app.post('/start', function (req, res) {
+   console.log("starts game...");
+});
+
+app.post('/stop', function (req, res) {
+   console.log("stops game..."); 
+});
+
 app.delete('/unregister', function (req, res) {
-    delete state.players[req.body.name];
+    delete state.players[req.body.id];
     res.status(200).send(state);
 });
 
