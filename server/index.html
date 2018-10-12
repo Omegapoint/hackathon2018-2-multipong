@@ -12,8 +12,8 @@
         #messages li { padding: 5px 10px; }
         #messages li:nth-child(odd) { background: #eee; }
         canvas {
-            height: 500px;
-            width: 500px;
+            height: 800px;
+            width: 800px;
         }
     </style>
 </head>
@@ -33,24 +33,17 @@
     ctx.fillStyle = 'green';
 
     ctx.fillRect(10, 10, 1000, 1000);
-    ctx.beginPath();
-    ctx.moveTo(0,0);
-    ctx.lineTo(300,150);
-    ctx.stroke();
-
-    const testBound = [{start: 200, end: 500, playerBool: true}];
-
-
 
     $(function () {
-        var socket = io();
-        $('form').submit(function(){
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        socket.on('chat message', function(msg){
-            console.log(msg);
+        const socket = io();
+        socket.on('pong', function(msg){
+            msg.bounds.forEach(function(bound) {
+                ctx.beginPath();
+                ctx.moveTo(bound.start[0], bound.start[1]);
+                ctx.lineTo(bound.end[0], bound.end[1]);
+                ctx.stroke();
+            })
+
         });
     });
 </script>
