@@ -10,6 +10,9 @@
     <!--</style>-->
 <!--</head>-->
 <body>
+<form action="">
+    <input id="nameInput" autocomplete="off" /><button id="joinButton">Join!</button>
+</form>
 <canvas id="canvas" height="800" width="800"></canvas>
 </body>
 <script src="/socket.io/socket.io.js"></script>
@@ -17,9 +20,9 @@
 <script>
     var canvas = document.getElementById('canvas');
     var ctx = canvas.getContext('2d');
+    var token;
 
     ctx.fillStyle = 'green';
-
     ctx.fillRect(0, 0, 1000, 1000);
 
     $(function () {
@@ -58,6 +61,27 @@
                 ctx.restore();
             }
         });
+    });
+
+    $('form').submit(function(){
+        const name = $('#nameInput').val();
+        $.ajax({
+            url: '/register',
+            dataType: 'json',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify( { name: name } ),
+            processData: false,
+            success: function( data, textStatus, jQxhr ){
+                console.log( data.id );
+                token = data.id;
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+                console.log( errorThrown );
+            }
+        });
+
+        return false;
     });
 </script>
 </html>

@@ -21,7 +21,9 @@ createPlayer("eee");
 calculateBounds(Object.keys(state.players).length);
 
 function createPlayer(name) {
-    state.players[Math.round(Math.random() * 10000)] = {name: name, padAngle: Math.random()*2*3.1415};
+    let id = Math.round(Math.random() * 10000);
+    state.players[id] = {name: name, padAngle: Math.random()*2*3.1415};
+    return id;
 }
 
 function calculateBounds(numberOfPlayers) {
@@ -30,8 +32,8 @@ function calculateBounds(numberOfPlayers) {
 
 app.post('/register', function (req, res) {
     calculateBounds(Object.keys(state.players).length + 1);
-    createPlayer(req.body.name);
-    res.status(200).send(state);
+    const id = createPlayer(req.body.name);
+    res.status(200).send({id: id});
 });
 
 app.post('/start', function (req, res) {
@@ -63,5 +65,5 @@ http.listen(3000, function () {
 io.on('connection', function (socket) {
     setInterval(() => {
         io.emit('pong', state);
-    }, 20);
+    }, 1000);
 });
