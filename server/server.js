@@ -21,6 +21,14 @@ app.delete('/unregister', function (req, res) {
     res.status(200).send(state);
 });
 
+const timeoutScheduled = Date.now();
+
+setInterval(() => {
+    const delay = Date.now() - timeoutScheduled;
+
+    console.log(`${delay}ms have passed since I was scheduled`);
+}, 100);
+
 http.listen(3000, function () {
     console.log('listening on *:3000');
 });
