@@ -64,6 +64,11 @@ setInterval(() => {
                 console.log("GAME OVER");
             }
         });
+
+        Object.values(state.players).forEach(player => {
+            const angularVelocityPerUpdate = 0.0174532925;
+            player.padAngle = player.padAngle+(angularVelocityPerUpdate*player.direction);
+        });
     }
 }, 10);
 
