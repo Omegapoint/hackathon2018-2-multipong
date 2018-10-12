@@ -10,9 +10,9 @@ module.exports = (ball, nPlayers, canvasWidth, canvasHeight) => {
     const ballx = ball.x - midpoint[0];
     const bally = midpoint[1] - ball.y;
     const ballDistance = Math.sqrt(Math.pow(ballx, 2) + Math.pow(bally, 2));
-    const ballAngle = 3.1415 / 2 - Math.tan(bally / (ballx === 0 ? 0.0001 : ballx));
+    const ballAngle = 3.1415 / 2 - Math.atan(bally / (ballx === 0 ? 0.0001 : ballx));
 
-    if ((ballAngle % sliceAngle) % 2 === 0) {
+    if (parseInt((ballAngle % sliceAngle) % 2) === 0) {
         return ballDistance > (radius / Math.abs(Math.cos(ballAngle)));
     }
     return ballDistance > (radius / Math.abs(Math.cos(2 * sliceAngle - ballAngle)));
