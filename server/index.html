@@ -11,6 +11,10 @@
         #messages { list-style-type: none; margin: 0; padding: 0; }
         #messages li { padding: 5px 10px; }
         #messages li:nth-child(odd) { background: #eee; }
+        canvas {
+            height: 500px;
+            width: 500px;
+        }
     </style>
 </head>
 <body>
@@ -27,7 +31,16 @@
     var ctx = canvas.getContext('2d');
 
     ctx.fillStyle = 'green';
-    ctx.fillRect(10, 10, 100, 100);
+
+    ctx.fillRect(10, 10, 1000, 1000);
+    ctx.beginPath();
+    ctx.moveTo(0,0);
+    ctx.lineTo(300,150);
+    ctx.stroke();
+
+    const testBound = [{start: 200, end: 500, playerBool: true}];
+
+
 
     $(function () {
         var socket = io();
@@ -37,7 +50,7 @@
             return false;
         });
         socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text(msg));
+            console.log(msg);
         });
     });
 </script>

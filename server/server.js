@@ -2,9 +2,9 @@ const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
-const bound = require('./graphicLogic/courtBoundaries')
+const bound = require('./graphicLogic/courtBoundaries');
 
-const state = {players: {}};
+const state = {players: {}, bounds: []};
 
 app.use(bodyParser.json());
 
@@ -13,26 +13,29 @@ app.get('/', function (req, res) {
 });
 
 app.post('/register', function (req, res) {
-    state.players[req.body.name] = Math.round(Math.random() * 10000);
+    state.players[Math.round(Math.random() * 10000)] = req.body.name;
     res.status(200).send(state);
+});
+
+app.post('/start', function (req, res) {
+   console.log("starts game...");
+});
+
+app.post('/stop', function (req, res) {
+   console.log("stops game..."); 
 });
 
 app.delete('/unregister', function (req, res) {
-    delete state.players[req.body.name];
+    delete state.players[req.body.id];
     res.status(200).send(state);
 });
 
-const timeoutScheduled = Date.now();
-
-// setInterval(() => {
-//     // const delay = Date.now() - timeoutScheduled;
-//     //
-//     // console.log(`${delay}ms have passed since I was scheduled`);
-// }, 100);
+setInterval(() => {
+   state.bounds = bound(Object.keys(state.players).length, 800, 800);
+}, 20);
 
 http.listen(3000, function () {
     console.log('listening on *:3000');
-    console.log(bound(2,400,400))
 });
 
 io.on('connection', function (socket) {

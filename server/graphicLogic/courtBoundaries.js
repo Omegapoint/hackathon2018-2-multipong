@@ -18,12 +18,11 @@ module.exports = (nPlayers, canvasHeight, canvasWidth) => {
         const pointLocationAngle = (pi/2) - ( pi / nPlayers) * boundaryIndex
         const pointLocation = [(midpoint[0]+Math.cos(pointLocationAngle)*radius), (midpoint[1]-Math.sin(pointLocationAngle)*radius)]
         const boundaryLength = 2 * radius * Math.tan(pi/(2*nPlayers))
-        console.log(pointLocation)
-        console.log(pointLocationAngle)
         const startCoord = [pointLocation[0]-(boundaryLength/2)*Math.sin(pointLocationAngle),
         pointLocation[1]-(boundaryLength/2)*Math.cos(pointLocationAngle)]
         const endCoord = [pointLocation[0]+(boundaryLength/2)*Math.sin(pointLocationAngle),
         pointLocation[1]+(boundaryLength/2)*Math.cos(pointLocationAngle)]
+
 
         let playerBool = false
         if (boundaryIndex % 2) {
