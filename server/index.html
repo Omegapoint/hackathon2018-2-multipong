@@ -40,8 +40,15 @@
                 ctx.arc(ball.x,ball.y,ball.radius,0,6.28);
                 ctx.fill();
                 ctx.closePath();
-            })
+            });
 
+            var i = 0;
+            for (var key in msg.players){
+                const startCoordinates = msg.bounds[i*2].start;
+                const endCoordinates = msg.bounds[i*2].end;
+                ctx.fillText(msg.players[key], (startCoordinates[0]+endCoordinates[0])/2, (startCoordinates[1]+endCoordinates[1])/2);
+                i++;
+            }
         });
     });
 </script>
