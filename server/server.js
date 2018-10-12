@@ -13,9 +13,16 @@ app.get('/', function(req, res){
 
 app.post('/register', function(req, res) {
    console.log(req.body);
-   state.players[req.body.name] = req.body.name;
+   state.players[req.body.name] = Math.round(Math.random()*10000);
    console.log(state);
-   res.status(204).send();
+   res.status(200).send(state);
+});
+
+app.delete('/unregister', function(req, res) {
+    delete state.players[req.body.name];
+    res.status(200).send(state);
+
+    console.log(state);
 });
 
 http.listen(3000, function(){
