@@ -2,7 +2,7 @@ module.exports = (nPlayers, canvasHeight, canvasWidth) => {
     const minDimension = Math.max(canvasHeight,canvasWidth)
     const radius = minDimension / 2
     const midpoint = [canvasWidth/2, canvasHeight/2]
-    const nBoundaries = 0
+    let nBoundaries = 0
     if (nPlayers < 3) {
         nBoundaries = 4 
     } else {
@@ -15,14 +15,14 @@ module.exports = (nPlayers, canvasHeight, canvasWidth) => {
         if (nPlayers === 1) {
             nPlayers = 2
         }
-        turnAngle = pi / (2 * nPlayers)
-        pointLocationAngle = ( pi / nPlayers) * boundaryIndex
-        pointLocation = [midpoint+Math.cos(pointLocationAngle)*radius, midpoint+Math.sin(pointLocationAngle)*radius]
-        boundaryLength = 2 * radius * Math.tan(pi/(2*nPlayers))
-        startCoord = [pointLocation[0]*(boundaryLength/2)*Math.sin(pointLocationAngle-(pi/2)),
-        pointLOcation[1]*(boundaryLength/2)*Math.cos(pointLocationAngle-(pi/2))]
-        endCoord = [pointLocation[0]*(boundaryLength/2)*Math.sin(pointLocationAngle+(pi/2)),
-        pointLOcation[1]*(boundaryLength/2)*Math.cos(pointLocationAngle+(pi/2))]
+        const pointLocationAngle = (pi/2) - ( pi / nPlayers) * boundaryIndex
+        const pointLocation = [(midpoint[0]+Math.cos(pointLocationAngle)*radius), (midpoint[1]+Math.sin(pointLocationAngle)*radius)]
+        const boundaryLength = 2 * radius * Math.tan(pi/(2*nPlayers))
+        console.log(pointLocation)
+        const startCoord = [pointLocation[0]+(boundaryLength/2)*Math.sin(pointLocationAngle-(pi/2)),
+        pointLocation[1]+(boundaryLength/2)*Math.cos(pointLocationAngle-(pi/2))]
+        const endCoord = [pointLocation[0]+(boundaryLength/2)*Math.sin(pointLocationAngle+(pi/2)),
+        pointLocation[1]+(boundaryLength/2)*Math.cos(pointLocationAngle+(pi/2))]
 
         let playerBool = false
         if (boundaryIndex % 2) {
