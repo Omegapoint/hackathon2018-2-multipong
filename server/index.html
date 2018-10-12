@@ -25,12 +25,20 @@
     $(function () {
         const socket = io();
         socket.on('pong', function(msg){
+            ctx.fillStyle = 'green';
             ctx.fillRect(0, 0, 1000, 1000);
             msg.bounds.forEach((element) => {
                 ctx.beginPath();
                 ctx.moveTo(element.start[0], element.start[1]);
                 ctx.lineTo(element.end[0], element.end[1]);
                 ctx.stroke();
+                ctx.closePath();
+            });
+            ctx.fillStyle = 'black';
+            msg.balls.forEach(ball => {
+                ctx.beginPath();
+                ctx.arc(ball.x,ball.y,ball.radius,0,6.28);
+                ctx.fill();
                 ctx.closePath();
             })
 

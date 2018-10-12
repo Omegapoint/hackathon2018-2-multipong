@@ -3,8 +3,9 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 const bound = require('./graphicLogic/courtBoundaries');
+const ball = require('./graphicLogic/ballObject');
 
-const state = {players: {}, bounds: []};
+const state = {players: {}, bounds: [], balls: []};
 
 app.use(bodyParser.json());
 
@@ -18,11 +19,12 @@ app.post('/register', function (req, res) {
 });
 
 app.post('/start', function (req, res) {
-   console.log("starts game...");
+    console.log("starts game...");
+    state.balls[0] = {x: 400, y: 400, v: 1000, radius: 40};
 });
 
 app.post('/stop', function (req, res) {
-   console.log("stops game..."); 
+    console.log("stops game...");
 });
 
 app.delete('/unregister', function (req, res) {
@@ -31,7 +33,7 @@ app.delete('/unregister', function (req, res) {
 });
 
 setInterval(() => {
-   state.bounds = bound(Object.keys(state.players).length, 800, 800);
+    state.bounds = bound(Object.keys(state.players).length, 800, 800);
 }, 20);
 
 http.listen(3000, function () {
@@ -40,6 +42,6 @@ http.listen(3000, function () {
 
 io.on('connection', function (socket) {
     setInterval(() => {
-       io.emit('pong', state);
+        io.emit('pong', state);
     }, 3000);
 });
