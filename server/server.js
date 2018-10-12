@@ -39,7 +39,7 @@ app.post('/register', function (req, res) {
 
 app.post('/start', function (req, res) {
     console.log("starts game...");
-    state.balls[0] = {x: 400, y: 400, v: 100, radius: 5, angle: 0};
+    state.balls[0] = {x: 400, y: 400, v: 100, radius: 5, angle: 10};
     res.status(200).send();
 });
 
