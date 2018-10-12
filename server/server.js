@@ -3,6 +3,8 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const bodyParser = require('body-parser');
 
+const state = { players: {} };
+
 app.use(bodyParser.json());
 
 app.get('/', function(req, res){
@@ -11,7 +13,9 @@ app.get('/', function(req, res){
 
 app.post('/register', function(req, res) {
    console.log(req.body);
-   res.status(418).send();
+   state.players[req.body.name] = req.body.name;
+   console.log(state);
+   res.status(204).send();
 });
 
 http.listen(3000, function(){
