@@ -1,6 +1,6 @@
 module.exports = (nPlayers, canvasHeight, canvasWidth) => {
     const minDimension = Math.max(canvasHeight,canvasWidth)
-    const radius = minDimension / 2.2
+    const radius = minDimension / 2.5
     const midpoint = [canvasWidth/2, canvasHeight/2]
     let nBoundaries = 0
     if (nPlayers < 3) {

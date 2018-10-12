@@ -1,44 +1,28 @@
-ball = new Ball();
+module.exports = (ball) => {
+    function isOutOfBounds(aBall) {
+        return false
+    }
 
-function Ball() {
-	this.objects = [];
-	this.maxID = 0;
+    function collidedWithPad() {
+        return false
+    }
 
-	this.push = function(ball) {
+    function hej() {
+        return false
+    }
 
-		var id = -1
+    for (let i = 0;i < this.maxID;i++) {
+        if(this.objects[i] === undefined) {
+            continue;
+        }
 
-		while(this.objects[++id] != undefined) {}
-		this.objects[id] = ball;
-		if(id > this.maxID) {this.maxID = id;}
-	}
+        let obj = this.objects[i];
 
-	this.update = function(dt) {
-		for(let i = 0;i < this.maxID;i++) {
-			if(this.objects[i] == undefined) continue;
+        obj.y += Math.cos(obj.angle) * obj.v * dt;
+        obj.x += Math.sin(obj.angle) * obj.v * dt;
 
-			let obj = this.objects[i];
-
-			obj.y -= obj.v * dt;
-
-			if (obj.y < 0) {
-				if (this.objects[i].combo == 0) {player.combo = 0;}
-				delete this.objects[i];
-			}
-		}
-	}
-
-	this.render = function(ctx) {
-		ctx.fillStyle = "#000000";
-		for(let i = 0;i < this.maxID;i++) {
-			if(this.objects[i] == undefined) continue;
-
-			let obj = this.objects[i];
-
-			ctx.beginPath();
-			ctx.arc(obj.x,obj.y,obj.radius,0,6.28);
-
-			ctx.fill();
-		}
-	}
+        if (isOutOfBounds(ball)) {
+            delete this.objects[i];
+        }
+    }
 }
