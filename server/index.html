@@ -18,10 +18,17 @@
 <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
 </form>
+<canvas id="canvas"></canvas>
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'green';
+    ctx.fillRect(10, 10, 100, 100);
+
     $(function () {
         var socket = io();
         $('form').submit(function(){
