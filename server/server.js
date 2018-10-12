@@ -13,8 +13,24 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
+createPlayer("aaa");
+createPlayer("bbb");
+createPlayer("ccc");
+createPlayer("ddd");
+createPlayer("eee");
+calculateBounds(Object.keys(state.players).length);
+
+function createPlayer(name) {
+    state.players[Math.round(Math.random() * 10000)] = {name: name, padAngle: Math.random()*2*3.1415};
+}
+
+function calculateBounds(numberOfPlayers) {
+    state.bounds = bound(numberOfPlayers, 800, 800);
+}
+
 app.post('/register', function (req, res) {
-    state.players[Math.round(Math.random() * 10000)] = req.body.name;
+    calculateBounds(Object.keys(state.players).length + 1);
+    createPlayer(req.body.name);
     res.status(200).send(state);
 });
 
@@ -30,11 +46,11 @@ app.post('/stop', function (req, res) {
 
 app.delete('/unregister', function (req, res) {
     delete state.players[req.body.id];
+    calculateBounds(Object.keys(state.players).length);
     res.status(200).send(state);
 });
 
 setInterval(() => {
-    state.bounds = bound(Object.keys(state.players).length, 800, 800);
     state.balls.forEach(element => {
         element = ball(element, 0.01);
     })

@@ -42,12 +42,20 @@
                 ctx.closePath();
             });
 
-            var i = 0;
             for (var key in msg.players){
-                const startCoordinates = msg.bounds[i*2].start;
-                const endCoordinates = msg.bounds[i*2].end;
-                ctx.fillText(msg.players[key], (startCoordinates[0]+endCoordinates[0])/2, (startCoordinates[1]+endCoordinates[1])/2);
-                i++;
+                let middlePoint = 400;
+                let radius = 300;
+                const x = middlePoint + radius*Math.cos(msg.players[key].padAngle);
+                const y = middlePoint + radius*Math.sin(msg.players[key].padAngle);
+                const width = 20;
+                const height = 6;
+
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(msg.players[key].padAngle + 3.1415/2);
+                ctx.fillText(msg.players[key].name + " " + msg.players[key].padAngle*(180/3.1415), 0, -10);
+                ctx.fillRect(-width/2, -height/2, width, height);
+                ctx.restore();
             }
         });
     });
